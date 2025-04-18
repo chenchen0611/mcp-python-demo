@@ -1,6 +1,6 @@
 # MCP Python Demo
 
-这是一个基于 MCP (Model Control Protocol) 的项目，集成了智谱 AI 和腾讯地图 API，提供了天气查询、地理编码和网络搜索等功能。项目包含命令行界面和 Web 界面两种交互方式。
+这是一个基于 MCP (Model Context Protocol) 的项目，集成了智谱 AI 和腾讯地图 API，提供了天气查询、地理编码和网络搜索等功能。项目包含命令行界面和 Web 界面两种交互方式。
 
 ## 功能特性
 
