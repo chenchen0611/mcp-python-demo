@@ -11,6 +11,25 @@
 - 💻 命令行和 Web 界面双重支持
 - 🌐 支持外网访问
 
+## 项目结构
+
+```
+mcp-python-demo/
+├── src/
+│   └── mcp_python_demo/
+│       ├── __init__.py
+│       ├── server.py
+│       ├── client.py
+│       ├── web_client.py
+│       └── main.py
+├── images/
+├── pyproject.toml
+├── .env
+├── .env.example
+├── .gitignore
+└── README.md
+```
+
 ## 快速开始
 
 ### 环境要求
@@ -54,6 +73,7 @@ TENCENT_MAP_API_BASE="https://apis.map.qq.com/ws/"
 #### Web 界面（推荐）
 
 ```bash
+cd src/mcp_python_demo
 streamlit run web_client.py
 ```
 
@@ -62,15 +82,29 @@ streamlit run web_client.py
 - 局域网访问：http://[your-local-ip]:8501
 - 外网访问：http://[your-public-ip]:8501
 
+##### 页面配置
+
+ - 直接输入server.py,点击连接
+ ![config](images/stdio.png)
+ - 新建一个terminal，运行下方命令然后在web页面输入http://127.0.0.1:8000
+    ```bash
+    cd src/mcp_python_demo
+    uv run server.py
+    ```
+    ![config](images/sse.png)
+
 #### 命令行界面
 
 ```bash
+cd src/mcp_python_demo
 # 使用本地服务器
-python client.py --agent server.py
+uv run client.py --agent server.py
 
 # 或使用远程服务器
-python client.py --agent http://your-server:8000
+uv run server.py
+uv run client.py --agent http://127.0.0.1:8000
 ```
+![config](images/terminal.png)
 
 ## 可用工具
 
@@ -92,18 +126,6 @@ async def web_search(search_query: str, search_engine: str = "search_std") -> st
     """使用智谱AI进行网络搜索"""
 ```
 
-## 项目结构
-
-```
-mcp-server-demo/
-├── server.py         # MCP 服务器实现
-├── client.py         # 命令行客户端
-├── web_client.py     # Web 界面实现
-├── pyproject.toml    # 项目配置和依赖
-├── .env             # 环境变量配置
-└── README.md        # 项目文档
-```
-
 ## 开发说明
 
 ### 添加新工具
@@ -123,7 +145,7 @@ async def your_tool(param1: str, param2: str = "default") -> str:
 
 - 所有敏感信息和配置都应该放在 `.env` 文件中
 - 不要将 `.env` 文件提交到版本控制系统
-- 参考 `.env.example`（如果有）进行配置
+- 参考 `.env.example` 进行配置
 
 ## 常见问题
 
@@ -141,14 +163,6 @@ async def your_tool(param1: str, param2: str = "default") -> str:
    - 检查防火墙设置
    - 确认端口是否开放
    - 验证服务器 IP 地址是否正确
-
-## 贡献指南
-
-1. Fork 项目
-2. 创建特性分支 (`git checkout -b feature/amazing-feature`)
-3. 提交更改 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 创建 Pull Request
 
 ## 致谢
 
