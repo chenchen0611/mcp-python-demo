@@ -1,4 +1,5 @@
 import json
+import click
 import httpx
 import os
 from typing import Any
@@ -170,7 +171,13 @@ async def web_search(search_query: str, search_engine: str = "search_std") -> st
     except Exception as e:
         return f"搜索失败: {str(e)}"
 
+@click.command()
+@click.option("--transport", default="sse")
+def main(transport: str):
+    if transport == "stdio":
+        import logging
+        logging.getLogger().setLevel(logging.WARNING)
+    mcp.run(transport=transport)
+
 if __name__ == "__main__":
-    # 以标准 I/O 方式运行 MCP 服务器
-    # mcp.run(transport='stdio')
-    mcp.run(transport='sse')
+    main()

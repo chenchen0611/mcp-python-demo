@@ -39,11 +39,10 @@ class MCPClient:
         is_js = server_script_path.endswith('.js')
         if not (is_python or is_js):
             raise ValueError("服务器脚本必须是 .py 或 .js 文件")
- 
         command = "python"if is_python else"node"
         server_params = StdioServerParameters(
             command=command,
-            args=[server_script_path],
+            args=[server_script_path, "--transport", "stdio"],
             env=None
         )
  
@@ -108,7 +107,7 @@ class MCPClient:
             
             # 执行工具
             result = await self.session.call_tool(tool_name, tool_args)
-            print(f"\n\n[Calling tool {tool_name} with args {tool_args}]\n\n")
+            # print(f"\n\n[Calling tool {tool_name} with args {tool_args}]\n\n")
             
             # 将工具调用和结果添加到消息中
             # self.messages.append(content.message.model_dump())
