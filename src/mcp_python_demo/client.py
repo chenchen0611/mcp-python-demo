@@ -15,7 +15,11 @@ from mcp.client.sse import sse_client
  
 # 加载 .env 文件，确保 API Key 受到保护
 load_dotenv()
- 
+prompt = """
+你是一个智能 AI 助手，具备天气查询、地理编码解析及全网信息检索等多元功能。
+当用户向你提出问题时，你会快速判断自身能力，若涉及天气状况、地理位置相关需求，或需获取最新网络资讯，将立即调用对应工具精准查询，
+并对结果进行系统整理与优化，以清晰、全面的方式为用户答疑解惑，对于复杂的问题，你将使用多个工具进行查询，并整理结果返回给用户，必要时可添加链接。
+"""
 
 class MCPClient:
     def __init__(self):
@@ -31,7 +35,7 @@ class MCPClient:
         self.client = OpenAI(api_key=self.openai_api_key, base_url=self.base_url)
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
-        self.messages = []  # 用于存储会话历史记录
+        self.messages = [{"role": "system", "content": prompt}]  # 用于存储会话历史记录
  
     async def connect_to_server(self, server_script_path: str):
         """连接到 MCP 服务器并列出可用工具"""
@@ -56,7 +60,7 @@ class MCPClient:
         # 列出 MCP 服务器上的工具
         response = await self.session.list_tools()
         tools = response.tools
-        print("\n已连接到服务器，支持以下工具:", [tool.name for tool in tools])   
+        print("已连接到服务器，支持以下工具:", [tool.name for tool in tools])   
 
 
     async def connect_to_sse_server(self, server_url: str):
@@ -107,7 +111,7 @@ class MCPClient:
             
             # 执行工具
             result = await self.session.call_tool(tool_name, tool_args)
-            # print(f"\n\n[Calling tool {tool_name} with args {tool_args}]\n\n")
+            print(f"[Calling tool 🔨 {tool_name} with args {tool_args}]")
             
             # 将工具调用和结果添加到消息中
             # self.messages.append(content.message.model_dump())

@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # 初始化 MCP 服务器
-mcp = FastMCP("MCPServer")
+mcp = FastMCP("MCPServer", host="127.0.0.1", port=8000)
 
 # API 配置
 ZHIPU_API_KEY = os.getenv("ZHIPU_API_KEY")
@@ -146,7 +146,7 @@ async def query_adcode(region_name: str) -> str:
 @mcp.tool()
 async def web_search(search_query: str, search_engine: str = "search_std") -> str:
     """
-    使用智谱AI进行网络搜索
+    使用智谱AI进行网络搜索，返回相关的标题、链接和内容。
     :param search_query: 搜索查询内容
     :param search_engine: 搜索引擎类型，默认为 search_std
     :return: 搜索结果的格式化字符串
